@@ -45,11 +45,35 @@ def findEmpty(board):
             if board[r][c] == 0:
                 return (r,c)
             
-    return (-1,-1)
+    return None
+
+def solve(board):
+    find = findEmpty(board)
+    if not find:
+        return True
+    
+    row, col = find
+
+    for val in range(1,10):
+        if isValid(board, row, col, val):
+            board[row][col] = val
+
+        if solve(board):
+            return True
+        
+        board[row][col] = 0
+
+    return False
+
+
+
 
 def main(args):
     board = [[0] * 9 for _ in range(9)]
-    print_board(board)
+    if solve(board):
+        print_board(board)
+    else:
+        print("There is no solution for this board.")
 
 
 if __name__ == "__main__":
